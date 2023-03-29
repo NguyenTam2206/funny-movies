@@ -41,7 +41,7 @@ function CustomApp({ Component, pageProps }: MyAppProps) {
     <StyledEngineProvider injectFirst>
       <CacheProvider value={cache}>
         <HelmetProvider>
-          <Helmet titleTemplate="Funny" defaultTitle="Funny" />
+          <Helmet titleTemplate="Funny Movies" defaultTitle="Funny Movies" />
           <UIProvider>
             <ModalProvider>
               <MuiThemeProvider theme={createTheme(theme)}>

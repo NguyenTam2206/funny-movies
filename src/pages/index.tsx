@@ -1,12 +1,10 @@
 import { memo } from "react";
-import Button from "@mui/material/Button";
+import AppBar from "../components/Appbar";
 
 const IndexPage: React.FC = () => {
   return (
     <div className="flex justify-center items-center h-full w-full">
-      <Button variant="contained" className="text-black" color="primary">
-        Hello World
-      </Button>
+      <AppBar />
     </div>
   );
 };

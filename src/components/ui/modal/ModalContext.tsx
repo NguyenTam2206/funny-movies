@@ -1,13 +1,6 @@
 import React from "react";
 
-export type MODAL_VIEWS =
-  | "CREATE_DOCUMENT_FOLDER"
-  | "UPDATE_DOCUMENT_FOLDER"
-  | "DELETE_DOCUMENT_FOLDER"
-  | "UPDATE_DOCUMENT"
-  | "DELETE_DOCUMENTS"
-  | "CONFIRM"
-  | "UPLOAD_FILE_BUILDERPAD";
+export type MODAL_VIEWS = "REGISTER";
 
 interface State {
   view?: MODAL_VIEWS;
