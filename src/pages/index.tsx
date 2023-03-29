@@ -1,8 +1,13 @@
 import { memo, ReactElement } from "react";
+import MovieListing from "../components/MovieListing";
 import CommonLayout from "../layouts/Common";
 
 function IndexPage() {
-  return <div>This is index page</div>;
+  return (
+    <div>
+      <MovieListing />
+    </div>
+  );
 }
 
 IndexPage.getLayout = function getLayout(page: ReactElement) {
