@@ -1,12 +1,12 @@
-import { memo } from "react";
-import AppBar from "../components/Appbar";
+import { memo, ReactElement } from "react";
+import CommonLayout from "../layouts/Common";
 
-const IndexPage: React.FC = () => {
-  return (
-    <div className="flex justify-center items-center h-full w-full">
-      <AppBar />
-    </div>
-  );
+function IndexPage() {
+  return <div>This is index page</div>;
+}
+
+IndexPage.getLayout = function getLayout(page: ReactElement) {
+  return <CommonLayout>{page}</CommonLayout>;
 };
 
-export default memo(IndexPage);
+export default IndexPage;

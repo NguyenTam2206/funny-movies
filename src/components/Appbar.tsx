@@ -1,45 +1,18 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import RegisterBtn from "./RegisterBtn";
 import LogInOutBtn from "./LogInOutBtn";
-
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { Button } from "@mui/material";
+import { useRouter } from "next/router";
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const isLogedIn = true;
+  const userEmail = "nguyenthientam.2206@gmail.com";
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  const router = useRouter();
 
   return (
     <AppBar position="static">
@@ -80,8 +53,21 @@ function ResponsiveAppBar() {
           >
             Funny Movies
           </Typography>
-          <div className="ml-auto">
-            <RegisterBtn />
+          <div className="ml-auto flex items-center">
+            {!isLogedIn && <RegisterBtn />}
+            {isLogedIn && (
+              <>
+                <div className="mr-3">Welcome, {userEmail}</div>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className="mr-3"
+                  onClick={() => router.push("/share")}
+                >
+                  Share a movie
+                </Button>
+              </>
+            )}
             <LogInOutBtn />
           </div>
         </Toolbar>
