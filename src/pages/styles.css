@@ -16,3 +16,16 @@ body {
   line-height: inherit;
   margin: 0;
 }
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* this sets the height based on a 16:9 aspect ratio - change this value to match your video's aspect ratio */
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

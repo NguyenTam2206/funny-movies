@@ -22,13 +22,16 @@ const MovieItem: React.FC<Props> = ({ src }: Props) => {
     .catch((error) => console.error(error));
   return (
     <div className="md:flex justify-center md:mx-[300px] my-16 md:my-4">
-      <iframe
-        className="border-1 border-solid border-black"
-        width="375"
-        height="210"
-        src={getVideoEmbedSrc(src)}
-        allowFullScreen
-      ></iframe>
+      <div className="md:basis-[375px] md:flex-shrink-0 mb-4">
+        <div className="video-container w-full">
+          <iframe
+            className="border-1 border-solid border-black"
+            src={getVideoEmbedSrc(src)}
+            allowFullScreen
+          ></iframe>
+        </div>
+      </div>
+
       {title && (
         <div className="md:ml-8">
           {!isMobile ? (

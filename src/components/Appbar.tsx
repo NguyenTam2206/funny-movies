@@ -50,6 +50,7 @@ function ResponsiveAppBar() {
                 fontWeight: 700,
                 color: "inherit",
                 textDecoration: "none",
+                fontSize: "13px",
               }}
             >
               Funny Movies
