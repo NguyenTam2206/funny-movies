@@ -57,7 +57,7 @@ function ResponsiveAppBar() {
             {!isLogedIn && <RegisterBtn />}
             {isLogedIn && (
               <>
-                <div className="mr-3">Welcome, {userEmail}</div>
+                <div className="mr-3 hidden md:block">Welcome, {userEmail}</div>
                 <Button
                   variant="contained"
                   color="secondary"

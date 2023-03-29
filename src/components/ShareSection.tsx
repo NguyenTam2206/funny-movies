@@ -14,7 +14,7 @@ const ShareSection: React.FC = () => {
   return (
     <div>
       <div>Share a Youtube movie</div>
-      <div className="md:w-[500px]">
+      <div className="w-[300px] md:w-[500px]">
         <TextField
           className="my-4 w-full"
           type="text"
