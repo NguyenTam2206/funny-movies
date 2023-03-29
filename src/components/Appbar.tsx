@@ -18,7 +18,10 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <div className="cursor-pointer flex" onClick={() => router.push("/")}>
+          <div
+            className="cursor-pointer flex items-center"
+            onClick={() => router.push("/")}
+          >
             <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
             <Typography
               variant="h6"
@@ -36,7 +39,10 @@ function ResponsiveAppBar() {
               Funny Movies
             </Typography>
           </div>
-          <div className="cursor-pointer flex" onClick={() => router.push("/")}>
+          <div
+            className="cursor-pointer flex items-center"
+            onClick={() => router.push("/")}
+          >
             <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
             <Typography
               variant="h5"
