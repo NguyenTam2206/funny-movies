@@ -1,5 +1,6 @@
 import { Tooltip } from "@mui/material";
 import { memo, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { useGetMovieInfo } from "../hooks/useGetMovieInfo";
 import { getVideoEmbedSrc } from "../utils/getVideoEmbedSrc";
 import { isTextClamped } from "../utils/isTextClamped";
@@ -30,33 +31,44 @@ const MovieItem: React.FC<Props> = ({ src }: Props) => {
       ></iframe>
       {title && (
         <div className="md:ml-8">
-          {isTextClamped(document.getElementById(title)) ? (
-            <Tooltip title={title}>
-              <div id={title} className="line-clamp-1 font-bold">
+          {!isMobile ? (
+            isTextClamped(document.getElementById(title)) ? (
+              <Tooltip title={title}>
+                <div id={title} className="line-clamp-2 font-bold">
+                  {title}
+                </div>
+              </Tooltip>
+            ) : (
+              <div id={title} className="line-clamp-2 font-bold">
                 {title}
               </div>
-            </Tooltip>
+            )
           ) : (
-            <div id={title} className="line-clamp-1 font-bold">
-              {title}
-            </div>
+            <div className="font-bold">{title}</div>
           )}
 
           <div className="text-sm text-gray-600">
             Share by : nguyenthientam.2206@gmail.com
           </div>
           <div className="text-sm text-gray-600">Description:</div>
-          {isTextClamped(document.getElementById(title)) ? (
-            <Tooltip title={description}>
+
+          {!isMobile ? (
+            isTextClamped(document.getElementById(title)) ? (
+              <Tooltip title={description}>
+                <div className="line-clamp-6 text-sm text-gray-600">
+                  {description}
+                </div>
+              </Tooltip>
+            ) : (
               <div className="line-clamp-6 text-sm text-gray-600">
                 {description}
               </div>
-            </Tooltip>
+            )
           ) : (
-            <div className="line-clamp-6 text-sm text-gray-600">
-              {description}
-            </div>
+            <div className="text-sm text-gray-600">{description}</div>
           )}
+
+          {}
         </div>
       )}
     </div>
