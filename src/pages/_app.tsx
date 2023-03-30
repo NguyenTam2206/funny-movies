@@ -17,6 +17,8 @@ import { NextPage } from "next";
 import useTheme from "../hooks/useTheme";
 import createTheme from "~/config/theme";
 import { ThemeProvider } from "~/contexts/ThemeContext";
+import { Provider as ReduxProvider } from "react-redux";
+import { store } from "~/stores";
 
 const cache = createCache({
   key: "css",
@@ -40,18 +42,20 @@ function CustomApp({ Component, pageProps }: MyAppProps) {
   return (
     <StyledEngineProvider injectFirst>
       <CacheProvider value={cache}>
-        <HelmetProvider>
-          <Helmet titleTemplate="Funny Movies" defaultTitle="Funny Movies" />
-          <UIProvider>
-            <ModalProvider>
-              <MuiThemeProvider theme={createTheme(theme)}>
-                {getLayout(<Component {...pageProps} />)}
-                <ToastContainer autoClose={2000} theme="colored" />
-                <ManagedModal />
-              </MuiThemeProvider>
-            </ModalProvider>
-          </UIProvider>
-        </HelmetProvider>
+        <ReduxProvider store={store}>
+          <HelmetProvider>
+            <Helmet titleTemplate="Funny Movies" defaultTitle="Funny Movies" />
+            <UIProvider>
+              <ModalProvider>
+                <MuiThemeProvider theme={createTheme(theme)}>
+                  {getLayout(<Component {...pageProps} />)}
+                  <ToastContainer autoClose={2000} theme="colored" />
+                  <ManagedModal />
+                </MuiThemeProvider>
+              </ModalProvider>
+            </UIProvider>
+          </HelmetProvider>
+        </ReduxProvider>
       </CacheProvider>
     </StyledEngineProvider>
   );

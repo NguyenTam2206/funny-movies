@@ -1,6 +1,6 @@
 import React from "react";
 
-export type MODAL_VIEWS = "REGISTER";
+export type MODAL_VIEWS = "REGISTER" | "LOGIN";
 
 interface State {
   view?: MODAL_VIEWS;

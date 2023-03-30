@@ -7,10 +7,15 @@ import RegisterBtn from "./RegisterBtn";
 import LogInOutBtn from "./LogInOutBtn";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useAuth } from "../hooks/useAuth";
 
 function ResponsiveAppBar() {
-  const isLogedIn = true;
-  const userEmail = "nguyenthientam.2206@gmail.com";
+  const { isLogedIn } = useAuth();
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    setUser(localStorage.getItem("user") || "");
+  }, []);
 
   const router = useRouter();
 
@@ -66,7 +71,11 @@ function ResponsiveAppBar() {
             {!isLogedIn && <RegisterBtn />}
             {isLogedIn && (
               <>
-                <div className="mr-3 hidden md:block">Welcome, {userEmail}</div>
+                {user && (
+                  <div className="mr-3 hidden md:block">
+                    Welcome, {JSON.parse(user).email}
+                  </div>
+                )}
                 <Button
                   variant="contained"
                   color="secondary"
@@ -77,7 +86,7 @@ function ResponsiveAppBar() {
                 </Button>
               </>
             )}
-            <LogInOutBtn />
+            <LogInOutBtn isLogedIn={isLogedIn} />
           </div>
         </Toolbar>
       </Container>

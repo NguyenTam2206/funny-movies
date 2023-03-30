@@ -4,11 +4,14 @@ import { memo } from "react";
 import Modal from "./modal";
 
 const RegisterView = dynamic(() => import("~/components/RegisterView"));
+const LogInView = dynamic(() => import("~/components/LogInView"));
 
 function renderModal(view: MODAL_VIEWS | undefined, data: any) {
   switch (view) {
     case "REGISTER":
       return <RegisterView />;
+    case "LOGIN":
+      return <LogInView />;
     default:
       return null;
   }

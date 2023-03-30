@@ -12,6 +12,7 @@ const RegisterBtn: React.FC = () => {
       }}
       variant="contained"
       color="primary"
+      data-testid="register-btn"
     >
       Register
     </Button>
