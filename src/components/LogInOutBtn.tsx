@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { memo, useCallback } from "react";
 import { useModalAction } from "./ui/modal/ModalContext";
 import { useDispatch } from "react-redux";
-import { setIsLogedIn } from "../stores/Common";
+import { setIsLogedIn, setUser } from "../stores/Common";
 
 type Props = {
   isLogedIn: boolean;
@@ -17,7 +17,9 @@ const LogInOutBtn: React.FC<Props> = ({ isLogedIn }: Props) => {
   const handleLogInOut = useCallback(() => {
     if (isLogedIn) {
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
       dispatch(setIsLogedIn(false));
+      dispatch(setUser(""));
     } else {
       openModal("LOGIN");
     }

@@ -6,15 +6,20 @@ import { getVideoEmbedSrc } from "../utils/getVideoEmbedSrc";
 import { isTextClamped } from "../utils/isTextClamped";
 
 type Props = {
-  src: string;
+  movie: {
+    createdBy: string;
+    createdDate: string;
+    url: string;
+    _id: string;
+  };
 };
 
-const MovieItem: React.FC<Props> = ({ src }: Props) => {
+const MovieItem: React.FC<Props> = ({ movie }: Props) => {
   const { fetchVideoData } = useGetMovieInfo();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  fetchVideoData(src)
+  fetchVideoData(movie.url)
     .then((snippet) => {
       setTitle(snippet.title);
       setDescription(snippet.description);
@@ -26,7 +31,7 @@ const MovieItem: React.FC<Props> = ({ src }: Props) => {
         <div className="video-container w-full">
           <iframe
             className="border-1 border-solid border-black"
-            src={getVideoEmbedSrc(src)}
+            src={getVideoEmbedSrc(movie.url)}
             allowFullScreen
           ></iframe>
         </div>
@@ -35,43 +40,27 @@ const MovieItem: React.FC<Props> = ({ src }: Props) => {
       {title && (
         <div className="md:ml-8">
           {!isMobile ? (
-            isTextClamped(document.getElementById(title)) ? (
-              <Tooltip title={title}>
-                <div id={title} className="line-clamp-2 font-bold">
-                  {title}
-                </div>
-              </Tooltip>
-            ) : (
-              <div id={title} className="line-clamp-2 font-bold">
-                {title}
-              </div>
-            )
+            <Tooltip title={title}>
+              <div className="line-clamp-2 font-bold">{title}</div>
+            </Tooltip>
           ) : (
             <div className="font-bold">{title}</div>
           )}
 
           <div className="text-sm text-gray-600">
-            Share by : nguyenthientam.2206@gmail.com
+            Share by : {movie.createdBy}
           </div>
           <div className="text-sm text-gray-600">Description:</div>
 
           {!isMobile ? (
-            isTextClamped(document.getElementById(title)) ? (
-              <Tooltip title={description}>
-                <div className="line-clamp-6 text-sm text-gray-600">
-                  {description}
-                </div>
-              </Tooltip>
-            ) : (
+            <Tooltip title={description}>
               <div className="line-clamp-6 text-sm text-gray-600">
                 {description}
               </div>
-            )
+            </Tooltip>
           ) : (
             <div className="text-sm text-gray-600">{description}</div>
           )}
-
-          {}
         </div>
       )}
     </div>

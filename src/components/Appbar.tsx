@@ -7,15 +7,13 @@ import RegisterBtn from "./RegisterBtn";
 import LogInOutBtn from "./LogInOutBtn";
 import { Button } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { useSelector } from "react-redux";
+import { RootState } from "../stores";
 
 function ResponsiveAppBar() {
-  const { isLogedIn } = useAuth();
-  const [user, setUser] = useState("");
-  useEffect(() => {
-    setUser(localStorage.getItem("user") || "");
-  }, []);
+  const { isLogedIn } = useAuth() || {};
+  const user = useSelector((state: RootState) => state.commonState.user);
 
   const router = useRouter();
 
@@ -27,7 +25,10 @@ function ResponsiveAppBar() {
             className="cursor-pointer flex items-center"
             onClick={() => router.push("/")}
           >
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            <AdbIcon
+              data-testid="logo-icon"
+              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+            />
             <Typography
               variant="h6"
               noWrap
@@ -48,7 +49,10 @@ function ResponsiveAppBar() {
             className="cursor-pointer flex items-center"
             onClick={() => router.push("/")}
           >
-            <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+            <AdbIcon
+              data-testid="logo-icon"
+              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+            />
             <Typography
               variant="h5"
               noWrap
@@ -72,9 +76,7 @@ function ResponsiveAppBar() {
             {isLogedIn && (
               <>
                 {user && (
-                  <div className="mr-3 hidden md:block">
-                    Welcome, {JSON.parse(user).email}
-                  </div>
+                  <div className="mr-3 hidden md:block">Welcome, {user}</div>
                 )}
                 <Button
                   variant="contained"

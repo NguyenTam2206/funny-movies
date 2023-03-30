@@ -1,11 +1,16 @@
 import { TextField } from "@mui/material";
 import { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { useModalAction } from "~/components/ui/modal/ModalContext";
 import { emailRegex } from "../config/constants";
+import { LOG_IN, REGISTER } from "../lib/network/rest/auth";
+import { setIsLogedIn, setUser } from "../stores/Common";
 import ModalContent from "./ui/modal/ModalContent";
 
 const RegisterView: React.FC = () => {
-  const loading = false;
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const { closeModal } = useModalAction();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,8 +20,42 @@ const RegisterView: React.FC = () => {
   const [bluredRepassword, setBluredRepassword] = useState(false);
 
   const handleAccept = useCallback(() => {
-    console.log("on register");
-  }, []);
+    setLoading(true);
+    const param = {
+      username: email,
+      password: password,
+    };
+    try {
+      REGISTER(param)
+        .then((data) => {
+          if (!data.code) {
+            toast.error(data.msg);
+          }
+          return data;
+        })
+        .then((data) => {
+          if (data.code) {
+            LOG_IN(param).then((data) => {
+              if (data.code) {
+                localStorage.setItem("token", data.data.accessToken);
+                localStorage.setItem("user", email);
+                dispatch(setIsLogedIn(true));
+                dispatch(setUser(email));
+                closeModal();
+                toast.success("Account successfully created");
+              } else {
+                toast.error(data.msg);
+              }
+            });
+          }
+        })
+        .then(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  }, [closeModal, dispatch, email, password]);
 
   const handleBlur = useCallback((option: number) => {
     if (option === 1) setBluredEmail(true);

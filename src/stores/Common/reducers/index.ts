@@ -10,4 +10,11 @@ export const commonReducers = {
     const isLogedIn = action.payload;
     state.isLogedIn = isLogedIn;
   },
+  setUser: (
+    state: WritableDraft<CommonState>,
+    action: PayloadAction<string>
+  ): void => {
+    const user = action.payload;
+    state.user = user;
+  },
 };

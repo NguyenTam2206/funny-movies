@@ -1,15 +1,38 @@
+import { LoadingButton } from "@mui/lab";
 import { Button, TextField } from "@mui/material";
 import Link from "next/link";
 import { memo, useCallback, useState } from "react";
+import { toast } from "react-toastify";
 import { youtubeRegex } from "../config/constants";
+import { SHARE_MOVIE } from "../lib/network/rest/movie";
 
 const ShareSection: React.FC = () => {
   const [url, setUrl] = useState("");
+  const [loading, setLoading] = useState(false);
   const [bluredUrl, setBluredUrl] = useState(false);
 
   const handleBlur = useCallback(() => {
     setBluredUrl(true);
   }, []);
+
+  const handleShareMovie = useCallback(() => {
+    setLoading(true);
+    try {
+      SHARE_MOVIE({ url })
+        .then((data) => {
+          if (!data.code) {
+            toast.error(data.msg);
+          } else {
+            toast.success("The movie was shared successfully");
+          }
+        })
+        .then(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  }, [url]);
 
   return (
     <div>
@@ -30,14 +53,17 @@ const ShareSection: React.FC = () => {
           }
           error={bluredUrl && !youtubeRegex.test(url)}
         />
-        <Button
+
+        <LoadingButton
           disabled={!youtubeRegex.test(url)}
           variant="contained"
           color="primary"
           className="w-full mb-4"
+          loading={loading}
+          onClick={handleShareMovie}
         >
           Share
-        </Button>
+        </LoadingButton>
         <a
           href="https://youtube.com"
           target="_blank"

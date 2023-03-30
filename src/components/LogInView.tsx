@@ -3,11 +3,13 @@ import { useCallback, useState } from "react";
 import { useModalAction } from "~/components/ui/modal/ModalContext";
 import { emailRegex } from "../config/constants";
 import ModalContent from "./ui/modal/ModalContent";
-import { setIsLogedIn } from "~/stores/Common";
+import { setIsLogedIn, setUser } from "~/stores/Common";
 import { useDispatch } from "react-redux";
+import { LOG_IN } from "../lib/network/rest/auth";
+import { toast } from "react-toastify";
 
 const LogInView: React.FC = () => {
-  const loading = false;
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { closeModal } = useModalAction();
   const [email, setEmail] = useState("");
@@ -17,13 +19,31 @@ const LogInView: React.FC = () => {
   const [bluredPassword, setBluredPassword] = useState(false);
 
   const handleAccept = useCallback(() => {
-    localStorage.setItem(
-      "user",
-      JSON.stringify({ email: "nguyenthientam.2206@gmail.com" })
-    );
-    dispatch(setIsLogedIn(true));
-    closeModal();
-  }, [closeModal, dispatch]);
+    setLoading(true);
+    const param = {
+      username: email,
+      password: password,
+    };
+    try {
+      LOG_IN(param)
+        .then((data) => {
+          if (data.code) {
+            localStorage.setItem("token", data.data.accessToken);
+            localStorage.setItem("user", email);
+            dispatch(setIsLogedIn(true));
+            dispatch(setUser(email));
+            closeModal();
+          } else {
+            toast.error(data.msg);
+          }
+        })
+        .then(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  }, [closeModal, dispatch, email, password]);
 
   const handleBlur = useCallback((option: number) => {
     if (option === 1) setBluredEmail(true);
