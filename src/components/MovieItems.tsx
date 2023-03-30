@@ -3,7 +3,6 @@ import { memo, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useGetMovieInfo } from "../hooks/useGetMovieInfo";
 import { getVideoEmbedSrc } from "../utils/getVideoEmbedSrc";
-import { isTextClamped } from "../utils/isTextClamped";
 
 type Props = {
   movie: {
@@ -25,8 +24,12 @@ const MovieItem: React.FC<Props> = ({ movie }: Props) => {
       setDescription(snippet.description);
     })
     .catch((error) => console.error(error));
+
   return (
-    <div className="md:flex justify-center md:mx-[300px] my-16 md:my-4">
+    <div
+      className="md:flex justify-center md:mx-[300px] my-16 md:my-4"
+      data-testid="movie-section"
+    >
       <div className="md:basis-[375px] md:flex-shrink-0 mb-4">
         <div className="video-container w-full">
           <iframe

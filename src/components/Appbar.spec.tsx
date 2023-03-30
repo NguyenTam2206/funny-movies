@@ -44,18 +44,23 @@ describe("ResponsiveAppBar", () => {
     expect(shareButtonElement).toBeInTheDocument();
   });
 
-  it("renders the welcome message for logged-in users", () => {
-    const user = { email: "test@example.com" };
-    localStorage.setItem("user", JSON.stringify(user));
+  it("renders the log out button when user is logged in", () => {
     mockedUseAuth.mockReturnValue({ isLogedIn: true });
-    render(
+    const target = render(
       <Provider store={store}>
         <ResponsiveAppBar />
       </Provider>
     );
-    const welcomeMessageElement = screen.getByText(/welcome/i);
-    expect(welcomeMessageElement).toBeInTheDocument();
-    const userEmailElement = screen.getByText(new RegExp(user.email, "i"));
-    expect(userEmailElement).toBeInTheDocument();
+    expect(target.getByText("Log out")).toBeInTheDocument();
+  });
+
+  it("renders the log in button when user is logged out", () => {
+    mockedUseAuth.mockReturnValue({ isLogedIn: false });
+    const target = render(
+      <Provider store={store}>
+        <ResponsiveAppBar />
+      </Provider>
+    );
+    expect(target.getByText("Log in")).toBeInTheDocument();
   });
 });

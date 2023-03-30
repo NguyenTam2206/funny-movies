@@ -9,7 +9,6 @@ const MovieListing: React.FC = () => {
   useEffect(() => {
     try {
       GET_MOVIE_LIST().then((data) => {
-        console.log("data", data);
         if (data.code) {
           setMovieList(data.data);
         } else {
@@ -20,10 +19,9 @@ const MovieListing: React.FC = () => {
       console.log(error);
     }
   }, []);
-  const videoUrl = "https://www.youtube.com/watch?v=uFOHW1cPhp0";
 
   return (
-    <div className="mt-8">
+    <div className="mt-8" data-testid="movie-listing">
       {movieList.map((movie, index) => (
         <MovieItems key={index} movie={movie} />
       ))}

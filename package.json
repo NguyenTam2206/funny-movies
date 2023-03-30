@@ -1,5 +1,5 @@
 {
-  "name": "call-center",
+  "name": "funny-movies",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "codegen": "graphql-codegen --config src/lib/network/graphql/codegen.yml"
+    "test": "jest"
   },
   "dependencies": {
     "@emotion/cache": "11.10.5",
@@ -51,6 +51,7 @@
     "jest-environment-jsdom": "^29.5.0",
     "next-router-mock": "^0.9.3",
     "next-transpile-modules": "9.0.0",
+    "node-fetch": "^3.3.1",
     "postcss": "8.4.19",
     "prettier": "2.8.4",
     "redux-mock-store": "^1.5.4",

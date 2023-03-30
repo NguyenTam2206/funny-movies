@@ -41,6 +41,7 @@ const ShareSection: React.FC = () => {
         <TextField
           className="my-4 w-full"
           type="text"
+          data-testid="share-input"
           name="Youtube Url"
           label="Youtube Url"
           placeholder="Enter your youtube movie url"
