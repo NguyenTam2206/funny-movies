@@ -46,7 +46,7 @@ describe("LogInOutBtn component", () => {
     }, 500);
   });
 
-  test("opens modal when log out button is clicked", async () => {
+  test("switch to log in button when loged out", async () => {
     const target = render(
       <Provider store={store}>
         <LogInOutBtn isLogedIn={true} />
