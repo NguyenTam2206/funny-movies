@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useGetMovieInfo } from "../hooks/useGetMovieInfo";
 import { getVideoEmbedSrc } from "../utils/getVideoEmbedSrc";
@@ -18,12 +18,14 @@ const MovieItem: React.FC<Props> = ({ movie }: Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  fetchVideoData(movie.url)
-    .then((snippet) => {
-      setTitle(snippet.title);
-      setDescription(snippet.description);
-    })
-    .catch((error) => console.error(error));
+  useEffect(() => {
+    fetchVideoData(movie.url)
+      .then((snippet) => {
+        setTitle(snippet.title);
+        setDescription(snippet.description);
+      })
+      .catch((error) => console.error(error));
+  }, [fetchVideoData, movie.url]);
 
   return (
     <div
